@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\MonsterCommander.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MonsterCommander.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\MonsterCommanderEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\MonsterCommander">
+      <UniqueIdentifier>{8B7E0151-7947-33E5-8D77-EDC8E88F3CA4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\MonsterCommander\CommandManager.cpp">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MonsterCommander\CommandManager.h">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\MonsterCommander\MonsterCommander.Build.cs">
+      <Filter>Source\MonsterCommander</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\MonsterCommander\MonsterCommander.cpp">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MonsterCommander\MonsterCommander.h">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MonsterCommander\MonsterCommanderCharacter.cpp">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MonsterCommander\MonsterCommanderCharacter.h">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\MonsterCommander\MonsterCommanderGameMode.cpp">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\MonsterCommander\MonsterCommanderGameMode.h">
+      <Filter>Source\MonsterCommander</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

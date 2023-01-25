@@ -1,0 +1,19 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-MonsterCommander-7066.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\MonsterCommanderEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\CommandManager.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommander.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommanderCharacter.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommanderGameMode.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\CommandManager.gen.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommander.init.gen.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommanderCharacter.gen.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\MonsterCommanderGameMode.gen.cpp.obj"
+"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\Default.rc2.res"
+/OUT:"C:\Users\Tyler\Documents\Unreal Projects\MonsterCommander\MonsterCommander\Intermediate\Build\Win64\UnrealEditor\Development\MonsterCommander\UnrealEditor-MonsterCommander-7066.lib"

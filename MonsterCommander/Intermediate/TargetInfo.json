@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "MonsterCommander",
+			"Path": "C:\\Users\\Tyler\\Documents\\Unreal Projects\\MonsterCommander\\MonsterCommander\\Source\\MonsterCommander.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "MonsterCommanderEditor",
+			"Path": "C:\\Users\\Tyler\\Documents\\Unreal Projects\\MonsterCommander\\MonsterCommander\\Source\\MonsterCommanderEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

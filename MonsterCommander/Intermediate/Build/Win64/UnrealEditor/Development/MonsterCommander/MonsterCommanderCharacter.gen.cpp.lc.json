@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\tyler\\documents\\unreal projects\\monstercommander\\monstercommander\\intermediate\\build\\win64\\unrealeditor\\inc\\monstercommander\\monstercommandercharacter.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\tyler\\documents\\unreal projects\\monstercommander\\monstercommander\\intermediate\\build\\win64\\monstercommandereditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "c:\\users\\tyler\\documents\\unreal projects\\monstercommander\\monstercommander\\intermediate\\build\\win64\\unrealeditor\\development\\monstercommander\\definitions.monstercommander.h",
+            "c:\\users\\tyler\\documents\\unreal projects\\monstercommander\\monstercommander\\source\\monstercommander\\monstercommandercharacter.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\charactermovementreplication.generated.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\rootmotionsource.generated.h",
+            "a:\\program files\\games\\epic\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\character.generated.h",
+            "c:\\users\\tyler\\documents\\unreal projects\\monstercommander\\monstercommander\\intermediate\\build\\win64\\unrealeditor\\inc\\monstercommander\\monstercommandercharacter.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
