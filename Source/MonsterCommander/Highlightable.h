@@ -4,16 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "SelectableEntity.h"
 #include "Highlightable.generated.h"
 
 
 
-UENUM(BlueprintType)
-enum ESelectableState {
-	None,
-	Highlighted,
-	Selected
-};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MONSTERCOMMANDER_API UHighlightable : public UActorComponent

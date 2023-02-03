@@ -5,6 +5,10 @@
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 #include "Highlightable.h"
+#include "SelectableEntity.h"
+
+
+
 
 // Sets default values for this component's properties
 UCommandManager::UCommandManager()
@@ -32,60 +36,150 @@ void UCommandManager::BeginPlay()
 void UCommandManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	FindSelectables();
+	OutlineSelectables();
 	
 }
 
-void UCommandManager::SelectPressed() {
 
-	switch (currentCommandState) {
-		case ECommandState::Selecting:
+void UCommandManager::OutlineSelectables() {
+	FHitResult res;
+	if (PerformSphereSweep(res, castDistance, castRadius, ECC_GameTraceChannel1)) {
+		USelectableEntity* entity = res.GetActor()->FindComponentByClass<USelectableEntity>();
 
-			if (currentHighlightedActor != nullptr) {
-				UE_LOG(LogTemp, Display, TEXT("Hit Actor: %s"), *currentHighlightedActor->GetActorNameOrLabel());
-				currentHighlightedActor->FindComponentByClass<UHighlightable>()->ToggleHighlight(ESelectableState::Selected);
+		if (entity == nullptr) return;
+		if (currentHighlightedEntity != nullptr) {
+			if (currentHighlightedEntity== entity) {
+				return;
 			}
-			break;
-		case ECommandState::GiveOrder:
-			break;
-		case ECommandState::SelectAttack:
-			break;
+		}
+
+		if (entity == currentSelectedEntity || entity == currentSecondSelectedEntity) return;
+		currentHighlightedEntity = entity;
+		currentHighlightedEntity->ToggleHighlight(ESelectableState::Highlighted);
 	}
+	else {
+		if (currentHighlightedEntity != nullptr) {
 
+			if (currentHighlightedEntity == currentSelectedEntity || currentHighlightedEntity == currentSecondSelectedEntity) return;
+
+			currentHighlightedEntity->ToggleHighlight(ESelectableState::None);
+			currentHighlightedEntity = nullptr;
+
+		}
+	}
 }
 
-void UCommandManager::SelectReleased() {
-	if (currentHighlightedActor == nullptr) return;
-	currentHighlightedActor->FindComponentByClass<UHighlightable>()->ToggleHighlight(ESelectableState::Highlighted);
-}
+bool UCommandManager::PerformSphereSweep(FHitResult& p_res, float p_dis, float p_rad, ECollisionChannel p_channel) {
 
-void UCommandManager::FindSelectables() {
 	FVector start, end;
 
 	start = GetComponentLocation();
 	end = start + camera->GetCameraRotation().Vector() * castDistance;
 	DrawDebugLine(GetWorld(), start, end, FColor::Red);
 
-
-	FHitResult res;
 	FCollisionShape sphere = FCollisionShape::MakeSphere(castRadius);
-	if (GetWorld()->SweepSingleByChannel(res, start, end, FQuat::Identity, ECC_GameTraceChannel1, sphere)) {
-
-		DrawDebugSphere(GetWorld(), start + camera->GetCameraRotation().Vector() * res.Distance, castRadius, 16, FColor::Red);
-		AActor* actor = res.GetActor();
-		if (currentHighlightedActor != nullptr) {
-
-		}
-		if (currentHighlightedActor == actor) {
-			return;
-		}
-		currentHighlightedActor = res.GetActor();//->FindComponentByClass<UHighlightable>();
-		currentHighlightedActor->FindComponentByClass<UHighlightable>()->ToggleHighlight(ESelectableState::Highlighted);
+	if (GetWorld()->SweepSingleByChannel(p_res, start, end, FQuat::Identity, p_channel, sphere)) {
+		DrawDebugSphere(GetWorld(), start + camera->GetCameraRotation().Vector() * p_res.Distance, castRadius, 16, FColor::Red);
+		return true;
 	}
-	else {
-		if (currentHighlightedActor != nullptr) {
-			currentHighlightedActor->FindComponentByClass<UHighlightable>()->ToggleHighlight(ESelectableState::None);
-			currentHighlightedActor = nullptr;
-		}
+
+	return false;
+}
+
+#pragma region Input
+void UCommandManager::SelectPressed() {
+
+	switch (currentCommandState) {
+		case ECommandState::Selecting:
+
+			PerformSelect();
+			break;
+		case ECommandState::SelectTarget:
+			PerformTargetSelect();
+			break;
+		case ECommandState::SelectOrderAtTarget:
+		case ECommandState ::SelectOrderAtLocation:
+			PerformOrderSelect(currentCommandState);
+			break;
+	}
+
+}
+
+void UCommandManager::SelectReleased() {
+	if (currentHighlightedEntity == nullptr) return;
+	if (currentHighlightedEntity == currentSelectedEntity || currentHighlightedEntity == currentSecondSelectedEntity) return;
+	currentHighlightedEntity->ToggleHighlight(ESelectableState::Highlighted);
+	
+}
+
+
+void UCommandManager::ClearOrder() {
+	//UE_LOG(LogTemp, Log, TEXT("Cleared Order"));
+	if (currentSelectedEntity != nullptr) {
+		currentSelectedEntity->ToggleHighlight(ESelectableState::None);
+		currentSelectedEntity = nullptr;
+	}
+	if (currentSecondSelectedEntity != nullptr) {
+		currentSecondSelectedEntity->ToggleHighlight(ESelectableState::None);
+		currentSecondSelectedEntity = nullptr;
+	}
+	currentCommandState = ECommandState::Selecting;
+}
+
+
+#pragma endregion
+
+#pragma region Commands
+void UCommandManager::PerformSelect() {
+	if (currentHighlightedEntity != nullptr) {
+
+		if (!currentHighlightedEntity->IsSelectable(this, ECommandState::Selecting))return;
+		currentHighlightedEntity->ToggleHighlight(ESelectableState::Selected);
+		currentSelectedEntity = currentHighlightedEntity;
+		currentCommandState = ECommandState::SelectTarget;
 	}
 }
+
+void UCommandManager::PerformTargetSelect() {
+
+	currentCommandState = ECommandState::Selecting;
+	if (currentSelectedEntity == nullptr) return;
+
+	
+
+	//If there is a current highlighted entity that isnt the selected one
+	if (currentHighlightedEntity != nullptr && currentHighlightedEntity != currentSelectedEntity) {
+		currentSecondSelectedEntity = currentHighlightedEntity;
+		currentSecondSelectedEntity->ToggleHighlight(ESelectableState::Selected);
+		currentCommandState = ECommandState::SelectOrderAtTarget;
+	}
+
+	//If no current highlighted entity
+	else {
+		FHitResult res;
+		if (PerformSphereSweep(res, moveOrderCastDis, castRadius, ECC_GameTraceChannel2)) {
+			orderAtLocation = res.Location;
+			currentCommandState = ECommandState::SelectOrderAtLocation;
+		}
+		else {
+			ClearOrder();
+		}
+	}
+
+}
+
+
+void UCommandManager::PerformOrderSelect(ECommandState p_commandState) {
+	switch (p_commandState) {
+		case ECommandState::SelectOrderAtLocation:
+			currentSelectedEntity->MoveToPosition(orderAtLocation);
+			break;
+
+		case ECommandState::SelectOrderAtTarget:
+			currentSelectedEntity->MoveToPosition(currentSecondSelectedEntity);
+			break;
+	}
+
+	ClearOrder();
+}
+#pragma endregion

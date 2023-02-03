@@ -2,6 +2,7 @@
 
 
 #include "Highlightable.h"
+#include "SelectableEntity.h"
 
 // Sets default values for this component's properties
 UHighlightable::UHighlightable()

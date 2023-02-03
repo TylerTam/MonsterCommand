@@ -6,13 +6,18 @@
 #include "Components/ActorComponent.h"
 #include "CommandManager.generated.h"
 
+class USelectableEntity;
+
 
 UENUM(BlueprintType)
 enum ECommandState{
 	Selecting,
-	GiveOrder,
-	SelectAttack
+	SelectTarget,
+	SelectOrderAtTarget,
+	SelectOrderAtLocation
 };
+
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -37,25 +42,47 @@ public:
 	void SelectPressed();
 
 	UFUNCTION(BlueprintCallable)
-	void SelectReleased();
+	void SelectReleased();	
+	
+	UFUNCTION(BlueprintCallable)
+	void ClearOrder();
 
 private:
-	void FindSelectables();
+	void OutlineSelectables();
+
+	void PerformSelect();
+
+	void PerformTargetSelect();
+
+	void PerformOrderSelect(ECommandState p_commandState);
+
+	bool PerformSphereSweep(FHitResult& p_res, float p_dis, float p_rad, ECollisionChannel p_channel);
 
 private:
+	UPROPERTY(EditAnywhere)
+	float castRadius = 25;	
+
 	UPROPERTY(EditAnywhere)
 	float castDistance = 1000;
 	
 	UPROPERTY(EditAnywhere)
-	float castRadius = 25;	
+		float moveOrderCastDis = 2000;
+	
+	
+	
 
 	APlayerCameraManager* camera;
-
-	AActor* currentHighlightedActor;
-
-
-
 	TEnumAsByte<ECommandState> currentCommandState = ECommandState::Selecting;
 
+
+	USelectableEntity* currentHighlightedEntity;
+
+	//The entity you are going to give a command to
+	USelectableEntity* currentSelectedEntity;
+
+	//If you have selected an entity, this would be the entity you select for yours to attack / heal
+	USelectableEntity* currentSecondSelectedEntity;
+
+	FVector orderAtLocation;
 		
 };
