@@ -44,7 +44,7 @@ public:
 	virtual void MoveToPosition(USelectableEntity* targetEntity);
 
 
-private:
+protected:
 	UHighlightable* outlineComponent;
 
 	UPROPERTY(EditAnywhere)
