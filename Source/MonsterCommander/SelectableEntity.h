@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "CommandManager.h"
+#include "Enums.h"
 #include "SelectableEntity.generated.h"
+
 
 class UHighlightable;
 
@@ -42,6 +44,7 @@ public:
 
 	virtual void MoveToPosition(FVector position);
 	virtual void MoveToPosition(USelectableEntity* targetEntity);
+	virtual void SetTargetType(ETargetType p_targetType);
 
 
 protected:
@@ -52,4 +55,6 @@ protected:
 
 	FVector positionOrderLocation;
 	USelectableEntity* target;
+	UPROPERTY(EditAnywhere)
+		ETargetType targetType;
 };

@@ -3,6 +3,7 @@
 
 #include "SelectableEntity.h"
 #include "Highlightable.h"
+#include "Enums.h"
 
 // Sets default values
 USelectableEntity::USelectableEntity()
@@ -49,6 +50,7 @@ void USelectableEntity::Selected() {
 
 void USelectableEntity::MoveToPosition(USelectableEntity* p_target) {
 	target = p_target;
+	
 	GetOwner()->SetActorLocation(p_target->GetOwner()->GetActorLocation());
 	//UE_LOG(LogTemp, Log, TEXT("Moving to target: %s"), *p_target->GetOwner()->GetActorNameOrLabel());
 }
@@ -58,6 +60,10 @@ void USelectableEntity::MoveToPosition(FVector position) {
 	//UE_LOG(LogTemp, Log, TEXT("Moving to position: %s"), *position.ToString());
 	GetOwner()->SetActorLocation(position);
 	
+}
+
+void  USelectableEntity::SetTargetType(ETargetType p_targetType) {
+	targetType = p_targetType;
 }
 
 

@@ -6,6 +6,7 @@
 #include "SelectableEntity.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "DA_MonsterBase.h"
 #include "SelectableEntity_AI.generated.h"
 /**
  * 
@@ -20,6 +21,8 @@ private:
 	AAIController* aiController;
 protected:
 	virtual void BeginPlay() override;
+	virtual void SetTargetType(ETargetType p_targetType) override;
+
 public:
 	virtual void ToggleHighlight(ESelectableState p_newState) override;
 
@@ -30,5 +33,13 @@ public:
 
 	virtual void MoveToPosition(FVector position)override;
 	virtual void MoveToPosition(USelectableEntity* targetEntity)override;
+
+protected:
+	UPROPERTY(EditAnywhere)
+	float enemyTargetStoppingDistance;
+
+public:
+	UPROPERTY(EditAnywhere)
+		UDA_MonsterBase* monsterData;
 	
 };
