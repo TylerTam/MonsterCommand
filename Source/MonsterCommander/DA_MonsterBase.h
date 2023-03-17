@@ -29,7 +29,14 @@ class MONSTERCOMMANDER_API UDA_MonsterBase : public UDataAsset
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		AActor* monsterActor;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		FString monsterName;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		USkeletalMesh* monsterMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		UAnimBlueprint* monsterAnimBlueprint;
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		TArray<FMonsterStats> levelStats;

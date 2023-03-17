@@ -46,6 +46,8 @@ public:
 	virtual void MoveToPosition(USelectableEntity* targetEntity);
 	virtual void SetTargetType(ETargetType p_targetType);
 
+	virtual void PerformAttackAtPosition(FVector p_position, int p_attackIndex);
+
 
 protected:
 	UHighlightable* outlineComponent;

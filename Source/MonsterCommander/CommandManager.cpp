@@ -87,6 +87,14 @@ bool UCommandManager::PerformSphereSweep(FHitResult& p_res, float p_dis, float p
 }
 
 #pragma region Input
+
+void UCommandManager::SummonPressed() {
+
+}
+void UCommandManager::ReturnMonsterPressed() {
+
+}
+
 void UCommandManager::SelectPressed() {
 
 	switch (currentCommandState) {
@@ -99,10 +107,19 @@ void UCommandManager::SelectPressed() {
 			break;
 		case ECommandState::SelectOrderAtTarget:
 		case ECommandState ::SelectOrderAtLocation:
-			PerformOrderSelect(currentCommandState);
+			PerformMoveOrder(currentCommandState);
 			break;
 	}
+}
 
+void UCommandManager::AttackPressed(int p_attackIndex) {
+	switch (currentCommandState) {
+
+		case ECommandState::SelectOrderAtTarget:
+		case ECommandState::SelectOrderAtLocation:
+			PerformAttackOrder(currentCommandState, p_attackIndex);
+			break;
+	}
 }
 
 void UCommandManager::SelectReleased() {
@@ -169,7 +186,7 @@ void UCommandManager::PerformTargetSelect() {
 }
 
 
-void UCommandManager::PerformOrderSelect(ECommandState p_commandState) {
+void UCommandManager::PerformMoveOrder(ECommandState p_commandState) {
 	switch (p_commandState) {
 		case ECommandState::SelectOrderAtLocation:
 			currentSelectedEntity->MoveToPosition(orderAtLocation);
@@ -178,6 +195,20 @@ void UCommandManager::PerformOrderSelect(ECommandState p_commandState) {
 		case ECommandState::SelectOrderAtTarget:
 			currentSelectedEntity->MoveToPosition(currentSecondSelectedEntity);
 			break;
+	}
+
+	ClearOrder();
+}
+
+void UCommandManager::PerformAttackOrder(ECommandState p_commandState, int p_attackIndex) {
+	switch (p_commandState) {
+	case ECommandState::SelectOrderAtLocation:
+		currentSelectedEntity->PerformAttackAtPosition(orderAtLocation, p_attackIndex);
+		break;
+
+	case ECommandState::SelectOrderAtTarget:
+		currentSelectedEntity->PerformAttackAtPosition(currentSecondSelectedEntity->GetOwner()->GetActorLocation(), p_attackIndex);
+		break;
 	}
 
 	ClearOrder();

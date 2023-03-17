@@ -38,3 +38,6 @@ void UHealth::Heal(int p_healAmount) {
 	currentHealth += p_healAmount;
 	if (currentHealth > maxHealth) currentHealth = maxHealth;
 }
+
+void UHealth::InitHealth(int p_maxHealth, int p_currentHealth) {
+}

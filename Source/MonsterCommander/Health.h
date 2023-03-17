@@ -22,6 +22,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+
+	virtual void InitHealth(int p_maxHealth, int p_currentHealth);
+
 	UFUNCTION(BlueprintCallable)
 	virtual void TakeDamage(int p_damageTaken);
 

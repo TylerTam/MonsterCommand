@@ -66,6 +66,10 @@ void  USelectableEntity::SetTargetType(ETargetType p_targetType) {
 	targetType = p_targetType;
 }
 
+void USelectableEntity::PerformAttackAtPosition(FVector p_position, int p_attackIndex) {
+	UE_LOG(LogTemp, Log, TEXT("Attacking position: %s"), *p_position.ToString());
+}
+
 
 
 

@@ -17,6 +17,12 @@ enum ECommandState{
 	SelectOrderAtLocation
 };
 
+UENUM(BlueprintType)
+enum ECommandType {
+	MoveTo,
+	AttackAt
+};
+
 
 
 
@@ -39,7 +45,17 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void SelectPressed();
+	void SelectPressed();	
+
+
+	UFUNCTION(BlueprintCallable)
+	void SummonPressed();	
+	
+	UFUNCTION(BlueprintCallable)
+	void ReturnMonsterPressed();	
+	
+	UFUNCTION(BlueprintCallable)
+	void AttackPressed(int p_attackIndex);
 
 	UFUNCTION(BlueprintCallable)
 	void SelectReleased();	
@@ -52,11 +68,14 @@ private:
 
 	void PerformSelect();
 
+
 	void PerformTargetSelect();
 
-	void PerformOrderSelect(ECommandState p_commandState);
+	void PerformMoveOrder(ECommandState p_commandState);
 
 	bool PerformSphereSweep(FHitResult& p_res, float p_dis, float p_rad, ECollisionChannel p_channel);
+
+	void PerformAttackOrder(ECommandState p_commandState, int p_attackIndex);
 
 private:
 	UPROPERTY(EditAnywhere)

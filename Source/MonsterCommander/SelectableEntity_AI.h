@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 #include "DA_MonsterBase.h"
+#include "Health.h"
 #include "SelectableEntity_AI.generated.h"
 /**
  * 
@@ -16,9 +17,35 @@ class MONSTERCOMMANDER_API USelectableEntity_AI : public USelectableEntity
 {
 	GENERATED_BODY()
 
+
 private:
 	UBlackboardComponent* aiBlackBoard;
 	AAIController* aiController;
+	UHealth* aiHealth;
+
+protected:
+	UPROPERTY(EditAnywhere)
+		float enemyTargetStoppingDistance;
+
+public:
+
+	UPROPERTY(BlueprintReadOnly)
+		int attackIndex;
+
+	UPROPERTY(EditAnywhere)
+		UDA_MonsterBase* monsterData;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly)
+		FMonsterStats currentMonsterStats;
+
+	UPROPERTY(EditAnywhere)
+		int experience;
+
+	UPROPERTY(EditAnywhere)
+		int level;
+
+
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetTargetType(ETargetType p_targetType) override;
@@ -34,12 +61,9 @@ public:
 	virtual void MoveToPosition(FVector position)override;
 	virtual void MoveToPosition(USelectableEntity* targetEntity)override;
 
-protected:
-	UPROPERTY(EditAnywhere)
-	float enemyTargetStoppingDistance;
+	virtual void PerformAttackAtPosition(FVector p_position, int p_attackIndex) override;
 
-public:
-	UPROPERTY(EditAnywhere)
-		UDA_MonsterBase* monsterData;
-	
+	UFUNCTION(BlueprintCallable)
+	virtual void InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience);
+
 };
