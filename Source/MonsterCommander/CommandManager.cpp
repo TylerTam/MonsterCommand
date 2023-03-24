@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 #include "Highlightable.h"
+#include "SelectableEntity_AI.h"
 #include "SelectableEntity.h"
 
 
@@ -90,9 +91,37 @@ bool UCommandManager::PerformSphereSweep(FHitResult& p_res, float p_dis, float p
 
 void UCommandManager::SummonPressed() {
 
-}
-void UCommandManager::ReturnMonsterPressed() {
+	if (spawnedMonster != nullptr) {
+		ReturnMonsterPressed();
+	}
 
+	FVector pos;
+	FHitResult res;
+	if (PerformSphereSweep(res, moveOrderCastDis, castRadius, ECC_GameTraceChannel2)) {
+		pos = res.Location;
+	}
+	else {
+		FVector start, end;
+
+		pos = GetComponentLocation();
+		pos = start + camera->GetCameraRotation().Vector() * castDistance;
+	}
+	
+	FActorSpawnParameters spawnInfo;
+	spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	pos = pos + FVector(0, 50, 0);
+	spawnedMonster = GetWorld()->SpawnActor<AActor>(spawnedActor,pos, FRotator::ZeroRotator);
+	
+
+	spawnedMonster->FindComponentByClass<USelectableEntity_AI>()->InitializeMonster(tempMonsterBase, 1, 0);
+
+}
+
+void UCommandManager::ReturnMonsterPressed() {
+	if (spawnedMonster != nullptr) {
+		spawnedMonster->Destroy();
+		spawnedMonster = nullptr;
+	}
 }
 
 void UCommandManager::SelectPressed() {
@@ -184,7 +213,6 @@ void UCommandManager::PerformTargetSelect() {
 	}
 
 }
-
 
 void UCommandManager::PerformMoveOrder(ECommandState p_commandState) {
 	switch (p_commandState) {

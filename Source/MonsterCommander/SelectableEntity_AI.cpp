@@ -8,12 +8,35 @@
 
 void USelectableEntity_AI::BeginPlay() {
 	USelectableEntity::BeginPlay();
+
 	aiController = UAIBlueprintHelperLibrary::GetAIController(GetOwner());
+	
+	///////////////////////// .this is causing the spawning crash (Note: The crash was because a controller was trying to be fetched,  
+	// but the AI did not have the controller automatically assigned when it was spawned in the editor, thus a null ptr
+	//APawn* actorPawn = Cast<APawn>(GetOwner());
+	//if (actorPawn == nullptr) {
+	//	UE_LOG(LogTemp, Warning, TEXT("actor is null"));
+	//	return;
+	//}
+	//AController* aCont = actorPawn->GetController();
+	//if (aCont == nullptr) {
+	//	UE_LOG(LogTemp, Warning, TEXT("controlleris null"));
+	//	return;
+	//}
+	//aiController = Cast<AAIController>(aCont);
+	//if (aiController == nullptr) {
+	//	UE_LOG(LogTemp, Warning, TEXT("AI Cont is null"));
+	//	return;
+	//}
+	/////////////////////////////////
+
 	aiBlackBoard = aiController->GetBlackboardComponent();
 	aiHealth = GetOwner()->FindComponentByClass<UHealth>();
+	
 }
 
 void USelectableEntity_AI::InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience) {
+
 
 	monsterData = p_monsterBase;
 	experience = p_experience;

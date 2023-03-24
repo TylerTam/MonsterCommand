@@ -29,7 +29,7 @@ class MONSTERCOMMANDER_API UDA_MonsterBase : public UDataAsset
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-		AActor* monsterActor;
+		TSubclassOf<class AActor> monsterActor;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		FString monsterName;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "DA_MonsterBase.h"
 #include "CommandManager.generated.h"
 
 class USelectableEntity;
@@ -86,7 +87,10 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 		float moveOrderCastDis = 2000;
-	
+	UPROPERTY(EditAnywhere)
+		UDA_MonsterBase* tempMonsterBase;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AActor> spawnedActor;
 	
 	
 
@@ -103,5 +107,9 @@ private:
 	USelectableEntity* currentSecondSelectedEntity;
 
 	FVector orderAtLocation;
+
+	
 		
+
+	AActor* spawnedMonster;
 };
