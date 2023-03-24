@@ -12,6 +12,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnOverrideTargetAssigned,AActor*, newTarget );
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class MONSTERCOMMANDER_API USelectableEntity_AI : public USelectableEntity
 {
@@ -66,4 +69,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience);
 
+
+	UPROPERTY(BlueprintAssignable, Category = "Custom/Enemy")
+		FOnOverrideTargetAssigned OnOverrideTargetAssigned;
 };

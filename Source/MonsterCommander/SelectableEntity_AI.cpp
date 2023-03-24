@@ -82,6 +82,7 @@ void USelectableEntity_AI::MoveToPosition(FVector position) {
 	aiBlackBoard->SetValueAsBool(FName("OrderGiven"), true);
 	aiBlackBoard->SetValueAsEnum(FName("CommandType"), (uint8)ECommandType::MoveTo);
 	SetTargetType(ETargetType::Position);
+	OnOverrideTargetAssigned.Broadcast(nullptr);
 }
 void USelectableEntity_AI::MoveToPosition(USelectableEntity* targetEntity) {
 
@@ -96,6 +97,8 @@ void USelectableEntity_AI::MoveToPosition(USelectableEntity* targetEntity) {
 	aiBlackBoard->SetValueAsBool(FName("OrderGiven"), true);
 	aiBlackBoard->SetValueAsEnum(FName("CommandType"), (uint8)ECommandType::MoveTo);
 	SetTargetType(ETargetType::AttackTarget);
+	//AssignOverrideTarget(targetEntity->GetOwner());
+	OnOverrideTargetAssigned.Broadcast(targetEntity->GetOwner());
 
 }
 void USelectableEntity_AI::SetTargetType(ETargetType p_targetType) {
