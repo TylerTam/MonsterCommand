@@ -7,6 +7,7 @@
 #include "Highlightable.h"
 #include "SelectableEntity_AI.h"
 #include "SelectableEntity.h"
+#include "MonsterCommanderCharacter.h"
 
 
 
@@ -30,6 +31,13 @@ void UCommandManager::BeginPlay()
 	// ...
 	
 	camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+	AMonsterCommanderCharacter* controller = Cast<AMonsterCommanderCharacter>(GetOwner());
+	if (controller == nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("////////////////////////////////////Null Controller"));
+		return;
+	}
+	controller->SetGenericTeamId((int)TeamID);
+	UE_LOG(LogTemp, Warning, TEXT("/////////////////////////////////Set Team"));
 }
 
 
@@ -113,9 +121,19 @@ void UCommandManager::SummonPressed() {
 	spawnedMonster = GetWorld()->SpawnActor<AActor>(spawnedActor,pos, FRotator::ZeroRotator);
 	
 
-	spawnedMonster->FindComponentByClass<USelectableEntity_AI>()->InitializeMonster(tempMonsterBase, 1, 0);
+	spawnedMonster->FindComponentByClass<USelectableEntity_AI>()->InitializeMonster(tempMonsterBase, 1, 0, teamId);
 
 }
+
+/*
+void UCommandManager::SetGenericTeamId(const FGenericTeamId& NewTeamID)
+{
+	if (TeamID != NewTeamID)
+	{
+		TeamID = NewTeamID;
+		// @todo notify perception system that a controller changed team ID
+	}
+}*/
 
 void UCommandManager::ReturnMonsterPressed() {
 	if (spawnedMonster != nullptr) {

@@ -127,3 +127,9 @@ void AMonsterCommanderCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+void AMonsterCommanderCharacter::SetGenericTeamId(const FGenericTeamId& NewTeamID) {
+
+	if (TeamId != NewTeamID) {
+		TeamId = NewTeamID;
+	}
+}

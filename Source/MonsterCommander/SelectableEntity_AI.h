@@ -8,6 +8,7 @@
 #include "AIController.h"
 #include "DA_MonsterBase.h"
 #include "Health.h"
+#include "Teams.h"
 #include "SelectableEntity_AI.generated.h"
 /**
  * 
@@ -23,6 +24,7 @@ class MONSTERCOMMANDER_API USelectableEntity_AI : public USelectableEntity
 
 private:
 	UBlackboardComponent* aiBlackBoard;
+	UPROPERTY(EditAnywhere)
 	AAIController* aiController;
 	UHealth* aiHealth;
 
@@ -67,9 +69,12 @@ public:
 	virtual void PerformAttackAtPosition(FVector p_position, int p_attackIndex) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience);
+	virtual void InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience, ETeamTypeId p_teamId);
 
 
 	UPROPERTY(BlueprintAssignable, Category = "Custom/Enemy")
 		FOnOverrideTargetAssigned OnOverrideTargetAssigned;
+
+	UPROPERTY(EditAnywhere)
+		ETeamTypeId TeamID;
 };

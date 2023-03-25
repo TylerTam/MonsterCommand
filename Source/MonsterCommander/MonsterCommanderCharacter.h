@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GenericTeamAgentInterface.h"
 #include "MonsterCommanderCharacter.generated.h"
 
 UCLASS(config=Game)
-class AMonsterCommanderCharacter : public ACharacter
+class AMonsterCommanderCharacter : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -51,15 +52,25 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
-
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	virtual FGenericTeamId GetGenericTeamId()  const override { return TeamId; }
+
+	virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override ;
+
+private:
+	FGenericTeamId TeamId;
+
+
 };
 

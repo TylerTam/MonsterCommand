@@ -16,6 +16,8 @@ enum class ETargetType:uint8{
     AllyTarget        UMETA(DisplayName = "AllyTarget"),
 };
 
+
+
 class MONSTERCOMMANDER_API Enums
 {
 public:

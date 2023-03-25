@@ -35,9 +35,9 @@ void USelectableEntity_AI::BeginPlay() {
 	
 }
 
-void USelectableEntity_AI::InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience) {
+void USelectableEntity_AI::InitializeMonster(UDA_MonsterBase* p_monsterBase, int p_monsterLevel, int p_experience, ETeamTypeId p_teamId) {
 
-
+	TeamID = p_teamId;
 	monsterData = p_monsterBase;
 	experience = p_experience;
 	level = p_monsterLevel-1;
@@ -53,6 +53,9 @@ void USelectableEntity_AI::InitializeMonster(UDA_MonsterBase* p_monsterBase, int
 
 	//Why cant I dereference a dataasset?
 	//UDA_MonsterBase anim = *monsterData;
+
+	aiController->SetGenericTeamId(FGenericTeamId((int)p_teamId));
+	
 
 	//Since UAnimBlueprint doesnt inherit from UClass, you have to get the UClass variant of it, which is the generatedClass
 	if (monsterData->monsterAnimBlueprint == nullptr) {
@@ -78,6 +81,7 @@ void USelectableEntity_AI::Selected() {
 
 void USelectableEntity_AI::MoveToPosition(FVector position) {
 	//USelectableEntity::MoveToPosition(position);
+
 	aiBlackBoard->SetValueAsVector(FName("TargetPos"), position);
 	aiBlackBoard->SetValueAsBool(FName("OrderGiven"), true);
 	aiBlackBoard->SetValueAsEnum(FName("CommandType"), (uint8)ECommandType::MoveTo);

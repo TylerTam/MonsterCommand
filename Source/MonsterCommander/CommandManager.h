@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "DA_MonsterBase.h"
+#include "Teams.h"
 #include "CommandManager.generated.h"
 
 class USelectableEntity;
@@ -28,7 +29,7 @@ enum ECommandType {
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class MONSTERCOMMANDER_API UCommandManager : public USceneComponent
+class MONSTERCOMMANDER_API UCommandManager : public USceneComponent//, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -77,6 +78,7 @@ private:
 	bool PerformSphereSweep(FHitResult& p_res, float p_dis, float p_rad, ECollisionChannel p_channel);
 
 	void PerformAttackOrder(ECommandState p_commandState, int p_attackIndex);
+	//virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override;
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -92,7 +94,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<AActor> spawnedActor;
 	
-	
+	UPROPERTY(EditAnywhere)
+		ETeamTypeId teamId;
 
 	APlayerCameraManager* camera;
 	TEnumAsByte<ECommandState> currentCommandState = ECommandState::Selecting;
@@ -107,9 +110,7 @@ private:
 	USelectableEntity* currentSecondSelectedEntity;
 
 	FVector orderAtLocation;
-
-	
-		
-
 	AActor* spawnedMonster;
+private:
+	ETeamTypeId TeamID;
 };
